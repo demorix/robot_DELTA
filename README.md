@@ -1,12 +1,12 @@
-# AIVA  
+# DELTA  
 **Artificial Intelligence Voice Assistant**
 
 🌐 **Language:** [English](README.md) | [Українська](README.ua.md)
 
-AIVA is an educational AI project developed together with students.  
+DELTA is an educational AI project developed together with students.  
 The goal of the project is to build a fully voice-controlled intelligent platform based on a Raspberry Pi AI system integrated into the Keyestudio KS0555 platform.
 
-AIVA listens, understands, speaks, and makes decisions autonomously using modern AI technologies.
+DELTA listens, understands, speaks, and makes decisions autonomously using modern AI technologies.
 
 ---
 
@@ -23,7 +23,7 @@ AIVA listens, understands, speaks, and makes decisions autonomously using modern
 
 ## 🧩 System Architecture
 
-AIVA is a multimodal AI system combining:
+DELTA is a multimodal AI system combining:
 - Voice input (STT)
 - Language understanding and reasoning (LLM)
 - Voice output (TTS)
