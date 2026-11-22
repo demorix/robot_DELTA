@@ -1,0 +1,53 @@
+import serial
+import time
+import threading
+
+# === Налаштування серійного порту ===
+arduino = serial.Serial('/dev/ttyUSB0', 9600, timeout=0)  # timeout=0 → неблокуюче
+# якщо тест на вінді то COM3(чи який вибраний 1 або 5) тоді замінити вище на: arduino = serial.Serial('COM3', 9600, timeout=0) 
+time.sleep(2)  # час на ініціалізацію
+
+# === Функція неблокуючого читання відповіді Arduino ===
+def read_from_arduino():
+    while True:
+        try:
+            line = arduino.readline().decode().strip()
+            if line:
+                print(f"Arduino: {line}")
+        except:
+            pass
+        time.sleep(0.01)  # маленька пауза, щоб не завантажувати CPU
+
+# === Запускаємо потік читання ===
+thread = threading.Thread(target=read_from_arduino, daemon=True)
+thread.start()
+
+# === Функція відправки команди (не чекаємо відповіді) ===
+def send_command(command):
+    print(f"Відправляю команду: {command}")
+    arduino.write((command + '\n').encode())
+
+#Тест команд (Команди відправляти по 1 і "чекати відповіді від ардуїнки що команда виконана(робити інші завдання паралельно а не перевіряти щосекундно відповідь)", інакше буде перебивати команди і не виконувати до кінця)
+commands = [
+    # "FORWARD 30"
+    # "BACKWARD 20"
+    # "LEFT 90"
+    # "RIGHT 90"
+
+    # бажано лише 360 градусів, але приймаються інші значення як і в остальних командах
+    # "ROTATE_LEFT" 
+    # "ROTATE_RIGHT"
+]
+
+for cmd in commands:
+    send_command(cmd)
+    time.sleep(1)  # робимо паузу між командами, Pi може робити інші задачі
+
+# === Основна робота Pi триває паралельно ===
+for i in range(10):
+    print(f"Pi виконує іншу роботу {i}")
+    time.sleep(0.5)
+
+# === Закриття порту в кінці ===
+arduino.close()
+print("Робота завершена")
